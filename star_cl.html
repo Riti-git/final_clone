@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starbucks India</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --g-dark:   #1E3932;
+  --g-mid:    #00704A;
+  --g-light:  #D4E9E2;
+  --g-pale:   #F1F8F5;
+  --gold:     #C39A4B;
+  --cream:    #F9F3E8;
+  --black:    #1C1C1C;
+  --white:    #FFFFFF;
+  --gray:     #6B7280;
+  --lgray:    #F3F4F6;
+  --border:   #E5E7EB;
+  --red:      #C0392B;
+  --shadow:   0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg:0 12px 48px rgba(0,0,0,0.14);
+  --radius:   16px;
+  --trans:    all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: var(--black);
+  background: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════════════ */
+.hidden { display: none !important; }
+.sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 28px; border-radius: 50px; font-size: 14px; font-weight: 700;
+  letter-spacing: 0.5px; cursor: pointer; border: 2px solid transparent;
+  transition: var(--trans); text-decoration: none; white-space: nowrap;
+}
+.btn-primary   { background: var(--g-mid);  color: #fff; border-color: var(--g-mid); }
+.btn-primary:hover { background: var(--g-dark); border-color: var(--g-dark); transform: translateY(-1px); }
+.btn-outline   { background: transparent; color: var(--black); border-color: var(--black); }
+.btn-outline:hover { background: var(--black); color: #fff; }
+.btn-white     { background: #fff; color: var(--g-dark); border-color: #fff; }
+.btn-white:hover { background: var(--g-light); }
+.btn-ghost     { background: transparent; color: #fff; border-color: rgba(255,255,255,0.6); }
+.btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+.btn-gold      { background: var(--gold); color: #fff; border-color: var(--gold); }
+.btn-gold:hover{ background: #a07c32; }
+
+.section-tag {
+  display: inline-block; font-size: 11px; font-weight: 900; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--g-mid); margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700;
+  line-height: 1.15; color: var(--g-dark);
+}
+.section-sub {
+  font-size: 16px; color: var(--gray); margin-top: 12px; max-width: 520px; line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════
+   PAGE SYSTEM
+═══════════════════════════════════════════════ */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ═══════════════════════════════════════════════
+   TOP ANNOUNCE BAR
+═══════════════════════════════════════════════ */
+.announce-bar {
+  background: var(--g-dark); color: #fff; text-align: center;
+  padding: 9px 20px; font-size: 13px; letter-spacing: 0.3px;
+}
+.announce-bar a { color: var(--g-light); font-weight: 700; margin-left: 6px; cursor: pointer; }
+
+/* ═══════════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════════ */
+.navbar {
+  position: sticky; top: 0; z-index: 1000;
+  background: #fff; border-bottom: 1px solid var(--border);
+  height: 70px; padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.nav-brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+
+.brand-circle {
+  width: 50px; height: 50px; background: var(--g-mid); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.brand-circle svg { width: 32px; height: 32px; fill: white; }
+.brand-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--g-dark); line-height: 1.2; }
+.brand-sub  { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+
+.nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+.nav-links li a, .nav-links li button {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: 8px;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+  color: var(--black); text-decoration: none; cursor: pointer; border: none;
+  background: transparent; transition: var(--trans);
+}
+.nav-links li a:hover, .nav-links li button:hover { background: var(--g-pale); color: var(--g-mid); }
+.nav-links li a.active, .nav-links li button.active { color: var(--g-mid); background: var(--g-pale); }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  background: none; border: none; padding: 6px;
+}
+.hamburger span { width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: var(--trans); }
+
+/* ═══════════════════════════════════════════════
+   HOME PAGE
+═══════════════════════════════════════════════ */
+/* Hero */
+.hero {
+  background: var(--g-dark); min-height: 600px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; padding: 80px 48px;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 70% 50%, rgba(0,112,74,0.25) 0%, transparent 70%);
+}
+.hero-deco {
+  position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,0.06);
+}
+.hero-deco-1 { width: 500px; height: 500px; bottom: -160px; right: -100px; }
+.hero-deco-2 { width: 280px; height: 280px; top: -80px;  left:  40px;  }
+.hero-deco-3 { width: 150px; height: 150px; bottom:  40px; left: 200px;  }
+
+.hero-inner {
+  position: relative; z-index: 1; max-width: 680px;
+  text-align: center; color: #fff;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: var(--g-light); font-size: 11px; font-weight: 900; letter-spacing: 2.5px;
+  text-transform: uppercase; padding: 7px 18px; border-radius: 50px; margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif; font-size: 64px; line-height: 1.08;
+  font-weight: 700; margin-bottom: 22px;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero-sub { font-size: 18px; opacity: 0.82; margin-bottom: 40px; max-width: 480px; margin-left: auto; margin-right: auto; }
+.hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* Features strip */
+.features-strip {
+  background: var(--g-pale); display: flex; justify-content: center;
+  gap: 0; flex-wrap: wrap;
+}
+.feat-item {
+  flex: 1; min-width: 180px; max-width: 280px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 36px 28px; border-right: 1px solid var(--border); gap: 10px;
+}
+.feat-item:last-child { border-right: none; }
+.feat-icon { font-size: 36px; }
+.feat-title { font-size: 14px; font-weight: 900; letter-spacing: 0.5px; color: var(--g-dark); }
+.feat-desc  { font-size: 12px; color: var(--gray); }
+
+/* Menu Section */
+.menu-section { padding: 80px 48px; background: #fff; }
+.menu-header { text-align: center; margin-bottom: 48px; }
+.menu-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+.menu-tab {
+  padding: 8px 22px; border-radius: 50px; border: 2px solid var(--border);
+  background: transparent; color: var(--gray); font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: var(--trans); letter-spacing: 0.5px;
+}
+.menu-tab.active, .menu-tab:hover { background: var(--g-dark); border-color: var(--g-dark); color: #fff; }
+
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; max-width: 1100px; margin: 0 auto; }
+
+.menu-card {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; cursor: pointer; transition: var(--trans); position: relative;
+}
+.menu-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--g-light); }
+
+.menu-card-img {
+  height: 180px; display: flex; align-items: center; justify-content: center;
+  font-size: 72px; position: relative; overflow: hidden;
+}
+.menu-card-badge {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--g-mid); color: #fff; font-size: 10px; font-weight: 900;
+  letter-spacing: 1px; padding: 4px 10px; border-radius: 50px;
+}
+.menu-card-body { padding: 18px 20px 20px; }
+.menu-card-name { font-size: 15px; font-weight: 700; color: var(--g-dark); margin-bottom: 5px; }
+.menu-card-desc { font-size: 12px; color: var(--gray); line-height: 1.5; margin-bottom: 14px; }
+.menu-card-footer { display: flex; align-items: center; justify-content: space-between; }
+.menu-card-price { font-size: 16px; font-weight: 900; color: var(--g-mid); }
+.btn-add {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--g-mid);
+  color: #fff; border: none; font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: var(--trans);
+  line-height: 1;
+}
+.btn-add:hover { background: var(--g-dark); transform: scale(1.1); }
+
+/* Promo Banner */
+.promo-banner {
+  background: var(--g-mid); padding: 72px 48px;
+  display: flex; align-items: center; justify-content: center; gap: 72px; flex-wrap: wrap;
+}
+.promo-text h2 { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: #fff; margin-bottom: 14px; max-width: 440px; line-height: 1.2; }
+.promo-text p  { color: rgba(255,255,255,0.85); font-size: 16px; margin-bottom: 28px; max-width: 400px; }
+.promo-cups { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+.cup-card {
+  width: 108px; height: 148px; background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2); border-radius: 12px 12px 24px 24px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; font-size: 40px; cursor: pointer; transition: var(--trans);
+}
+.cup-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-4px); }
+.cup-card span { font-size: 11px; font-weight: 900; color: rgba(255,255,255,0.75); letter-spacing: 1px; }
+
+/* Rewards teaser */
+.rewards-teaser {
+  background: var(--g-dark); padding: 80px 48px; text-align: center; color: #fff;
+}
+.rewards-teaser .section-tag { color: var(--gold); }
+.rewards-teaser .section-title { color: #fff; margin-bottom: 16px; }
+.rewards-teaser .section-sub { color: rgba(255,255,255,0.75); margin: 0 auto 48px; }
+
+.steps { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; margin-bottom: 48px; }
+.step { max-width: 180px; text-align: center; }
+.step-icon { width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--gold); background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px; }
+.step h4  { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.step p   { font-size: 12px; opacity: 0.65; line-height: 1.5; }
+
+/* ═══════════════════════════════════════════════
+   ORDER PAGE
+═══════════════════════════════════════════════ */
+.order-layout {
+  display: grid; grid-template-columns: 1fr 360px; min-height: calc(100vh - 110px);
+}
+.order-main { padding: 48px; background: var(--lgray); }
+.order-main h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--g-dark); margin-bottom: 8px; }
+.order-main .sub { color: var(--gray); font-size: 14px; margin-bottom: 32px; }
+
+.order-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.filter-btn {
+  padding: 7px 18px; border-radius: 50px; border: 2px solid var(--border); background: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; transition: var(--trans); color: var(--gray);
+}
+.filter-btn.active, .filter-btn:hover { background: var(--g-dark); border-color: var(--g-dark); color: #fff; }
+
+.order-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+
+.order-item {
+  background: #fff; border-radius: var(--radius); border: 1px solid var(--border);
+  overflow: hidden; cursor: pointer; transition: var(--trans);
+}
+.order-item:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.order-item-img { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 60px; }
+.order-item-body { padding: 14px 16px; }
+.order-item-name { font-size: 14px; font-weight: 700; color: var(--g-dark); margin-bottom: 4px; }
+.order-item-price { font-size: 14px; font-weight: 900; color: var(--g-mid); margin-bottom: 12px; }
+.btn-order-add {
+  width: 100%; padding: 8px; border-radius: 8px; background: var(--g-mid); color: #fff;
+  border: none; font-size: 13px; font-weight: 700; cursor: pointer; transition: var(--trans);
+}
+.btn-order-add:hover { background: var(--g-dark); }
+
+/* Cart sidebar */
+.cart-sidebar {
+  background: #fff; border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; position: sticky; top: 70px; height: calc(100vh - 70px);
+}
+.cart-header {
+  padding: 24px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cart-header h3 { font-size: 18px; font-weight: 700; color: var(--g-dark); }
+.cart-count { background: var(--g-mid); color: #fff; font-size: 11px; font-weight: 900; padding: 3px 9px; border-radius: 50px; }
+.cart-items { flex: 1; overflow-y: auto; padding: 16px 24px; }
+.cart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 12px; color: var(--gray); font-size: 14px; text-align: center; }
+.cart-empty .big-emoji { font-size: 48px; }
+
+.cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.cart-item-emoji { font-size: 32px; flex-shrink: 0; width: 48px; height: 48px; background: var(--lgray); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: 13px; font-weight: 700; color: var(--g-dark); }
+.cart-item-price { font-size: 12px; color: var(--gray); }
+.cart-item-qty { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.qty-btn { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--border); background: #fff; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--trans); line-height: 1; }
+.qty-btn:hover { background: var(--g-mid); color: #fff; border-color: var(--g-mid); }
+.qty-val { font-size: 13px; font-weight: 700; min-width: 20px; text-align: center; }
+.cart-item-total { font-size: 14px; font-weight: 900; color: var(--g-mid); }
+.cart-remove { background: none; border: none; color: #ccc; cursor: pointer; font-size: 16px; padding: 4px; transition: var(--trans); }
+.cart-remove:hover { color: var(--red); }
+
+.cart-footer { padding: 20px 24px; border-top: 1px solid var(--border); }
+.cart-summary { margin-bottom: 16px; }
+.cart-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--gray); margin-bottom: 6px; }
+.cart-row.total { font-size: 16px; font-weight: 900; color: var(--black); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.btn-checkout { width: 100%; }
+
+/* ═══════════════════════════════════════════════
+   GIFT PAGE
+═══════════════════════════════════════════════ */
+.gift-hero {
+  background: linear-gradient(135deg, var(--g-dark) 0%, #0a5940 100%);
+  padding: 80px 48px; text-align: center; color: #fff; position: relative; overflow: hidden;
+}
+.gift-hero::after {
+  content: '🎁'; position: absolute; font-size: 300px; opacity: 0.04;
+  right: -60px; bottom: -60px; transform: rotate(-15deg);
+}
+.gift-hero h1 { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; margin-bottom: 16px; }
+.gift-hero h1 em { font-style: italic; color: var(--gold); }
+.gift-hero p { font-size: 18px; opacity: 0.82; max-width: 500px; margin: 0 auto 36px; }
+
+.gift-section { padding: 72px 48px; }
+.gift-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 28px; max-width: 1100px; margin: 0 auto; }
+
+.gift-card {
+  border-radius: 20px; overflow: hidden; cursor: pointer; transition: var(--trans);
+  border: 1px solid var(--border); background: #fff;
+}
+.gift-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+.gift-card-visual {
+  height: 180px; display: flex; align-items: center; justify-content: center; font-size: 80px;
+  position: relative;
+}
+.gift-card-body { padding: 20px 22px; }
+.gift-card-name { font-size: 16px; font-weight: 700; color: var(--g-dark); margin-bottom: 6px; }
+.gift-card-desc { font-size: 13px; color: var(--gray); margin-bottom: 16px; line-height: 1.5; }
+.gift-card-footer { display: flex; align-items: center; justify-content: space-between; }
+.gift-from { font-size: 12px; color: var(--gray); }
+.gift-from b { color: var(--g-mid); }
+
+.gift-custom {
+  background: var(--cream); border-radius: 24px; padding: 56px 48px;
+  max-width: 700px; margin: 0 auto 60px; text-align: center;
+}
+.gift-custom h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--g-dark); margin-bottom: 12px; }
+.gift-custom p  { color: var(--gray); margin-bottom: 32px; }
+.gift-form { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+.gift-form input, .gift-form select, .gift-form textarea {
+  padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 10px;
+  font-size: 14px; font-family: 'Lato', sans-serif; transition: var(--trans); outline: none; background: #fff;
+}
+.gift-form input:focus, .gift-form select:focus, .gift-form textarea:focus { border-color: var(--g-mid); box-shadow: 0 0 0 3px rgba(0,112,74,0.1); }
+.gift-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.gift-form label { font-size: 12px; font-weight: 700; color: var(--gray); letter-spacing: 0.5px; margin-bottom: 4px; display: block; text-transform: uppercase; }
+.gift-form textarea { resize: vertical; min-height: 80px; }
+
+/* ═══════════════════════════════════════════════
+   STORE LOCATOR PAGE
+═══════════════════════════════════════════════ */
+.store-layout {
+  display: grid; grid-template-columns: 380px 1fr; min-height: calc(100vh - 110px);
+}
+.store-sidebar { background: #fff; border-right: 1px solid var(--border); overflow-y: auto; }
+.store-search-box { padding: 24px; border-bottom: 1px solid var(--border); background: var(--g-dark); }
+.store-search-box h3 { color: #fff; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+.store-search-row { display: flex; gap: 8px; }
+.store-search-input {
+  flex: 1; padding: 10px 14px; border-radius: 10px; border: none; font-size: 14px;
+  font-family: 'Lato', sans-serif; outline: none;
+}
+.btn-locate { padding: 10px 16px; border-radius: 10px; background: var(--g-mid); color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; transition: var(--trans); white-space: nowrap; }
+.btn-locate:hover { background: var(--g-light); color: var(--g-dark); }
+
+.store-list { padding: 8px; }
+.store-item {
+  padding: 16px; border-radius: 12px; cursor: pointer; transition: var(--trans);
+  border: 1px solid transparent; margin-bottom: 6px;
+}
+.store-item:hover, .store-item.active { background: var(--g-pale); border-color: var(--g-light); }
+.store-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+.store-item-name { font-size: 14px; font-weight: 700; color: var(--g-dark); }
+.store-open { font-size: 11px; font-weight: 700; color: #10b981; background: #ecfdf5; padding: 3px 8px; border-radius: 50px; }
+.store-addr { font-size: 12px; color: var(--gray); margin-bottom: 8px; }
+.store-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.store-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 50px; background: var(--lgray); color: var(--gray); }
+
+.map-area {
+  background: var(--g-pale); display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 24px; position: relative; overflow: hidden;
+}
+.map-placeholder {
+  width: 100%; height: 100%; min-height: 500px;
+  position: relative; background: #e8f5e9; overflow: hidden;
+}
+.map-grid-lines {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(0,112,74,0.08) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0,112,74,0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.map-roads {
+  position: absolute; inset: 0;
+}
+.map-pin {
+  position: absolute; transform: translate(-50%, -100%); cursor: pointer; z-index: 10; transition: var(--trans);
+}
+.map-pin:hover { transform: translate(-50%, -110%) scale(1.1); }
+.map-pin-dot {
+  width: 36px; height: 36px; border-radius: 50% 50% 50% 0; background: var(--g-mid);
+  border: 3px solid #fff; box-shadow: 0 4px 12px rgba(0,112,74,0.4);
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+  transform: rotate(-45deg); position: relative;
+}
+.map-pin-dot span { transform: rotate(45deg); }
+.map-pin-label {
+  position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%);
+  background: var(--g-dark); color: #fff; font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 6px; white-space: nowrap;
+}
+.map-info-card {
+  position: absolute; bottom: 24px; right: 24px; background: #fff;
+  border-radius: 16px; padding: 20px; box-shadow: var(--shadow-lg);
+  min-width: 240px; display: none;
+}
+.map-info-card.visible { display: block; }
+.map-info-card h4 { font-size: 15px; font-weight: 700; color: var(--g-dark); margin-bottom: 6px; }
+.map-info-card p  { font-size: 12px; color: var(--gray); margin-bottom: 12px; }
+
+/* ═══════════════════════════════════════════════
+   PAY PAGE
+═══════════════════════════════════════════════ */
+.pay-page { background: var(--lgray); min-height: calc(100vh - 110px); padding: 56px 48px; }
+.pay-inner { max-width: 900px; margin: 0 auto; }
+.pay-inner > h2 { font-family: 'Playfair Display', serif; font-size: 36px; color: var(--g-dark); margin-bottom: 6px; }
+.pay-inner > p  { color: var(--gray); margin-bottom: 40px; }
+
+.pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 32px; }
+
+.pay-card {
+  background: #fff; border-radius: 20px; border: 1px solid var(--border); padding: 28px;
+  transition: var(--trans); cursor: pointer;
+}
+.pay-card:hover { box-shadow: var(--shadow); border-color: var(--g-light); }
+.pay-card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.pay-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+.pay-card-title { font-size: 17px; font-weight: 700; color: var(--g-dark); }
+.pay-card-sub   { font-size: 12px; color: var(--gray); }
+.pay-card p { font-size: 13px; color: var(--gray); line-height: 1.6; margin-bottom: 20px; }
+.pay-balance-card {
+  background: linear-gradient(135deg, var(--g-dark) 0%, var(--g-mid) 100%);
+  border-radius: 20px; padding: 32px; color: #fff; grid-column: 1 / -1;
+}
+.pay-balance-card h3 { font-size: 13px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; margin-bottom: 12px; }
+.pay-balance-amount { font-size: 52px; font-weight: 900; margin-bottom: 6px; }
+.pay-balance-amount sup { font-size: 24px; }
+.pay-balance-note { font-size: 13px; opacity: 0.7; margin-bottom: 28px; }
+.pay-card-number { font-size: 16px; letter-spacing: 4px; opacity: 0.6; margin-bottom: 4px; }
+.pay-card-name  { font-size: 14px; font-weight: 700; opacity: 0.9; }
+.pay-card-dots  { display: flex; gap: 6px; margin-bottom: 28px; }
+.pay-card-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.35); }
+.pay-card-dots span:last-child { background: var(--gold); }
+
+.reload-form { background: #fff; border-radius: 20px; padding: 28px; border: 1px solid var(--border); }
+.reload-form h3 { font-size: 18px; font-weight: 700; color: var(--g-dark); margin-bottom: 20px; }
+.reload-amounts { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.reload-amt {
+  padding: 10px 20px; border-radius: 50px; border: 2px solid var(--border);
+  font-size: 14px; font-weight: 700; cursor: pointer; transition: var(--trans); color: var(--gray);
+}
+.reload-amt.active, .reload-amt:hover { background: var(--g-mid); border-color: var(--g-mid); color: #fff; }
+
+/* ═══════════════════════════════════════════════
+   AUTH PAGES (Login / Sign Up)
+═══════════════════════════════════════════════ */
+.auth-page {
+  min-height: calc(100vh - 110px); display: flex;
+  background: linear-gradient(135deg, var(--g-dark) 0%, #0d4d35 100%);
+}
+.auth-left {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 60px; flex-direction: column; text-align: center; color: #fff;
+}
+.auth-left-logo { font-size: 80px; margin-bottom: 28px; }
+.auth-left h2 { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; margin-bottom: 14px; line-height: 1.2; }
+.auth-left h2 em { font-style: italic; color: var(--gold); }
+.auth-left p  { font-size: 16px; opacity: 0.75; max-width: 320px; line-height: 1.7; margin-bottom: 32px; }
+.auth-perks { display: flex; flex-direction: column; gap: 14px; text-align: left; }
+.auth-perk { display: flex; align-items: center; gap: 12px; font-size: 14px; opacity: 0.85; }
+.auth-perk-icon { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+
+.auth-right {
+  width: 480px; background: #fff; display: flex; align-items: center; justify-content: center;
+  padding: 60px 48px; flex-direction: column;
+}
+.auth-right h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--g-dark); margin-bottom: 6px; }
+.auth-right .sub { font-size: 14px; color: var(--gray); margin-bottom: 32px; }
+
+.auth-form { width: 100%; display: flex; flex-direction: column; gap: 18px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--gray); }
+.form-group input {
+  padding: 13px 16px; border: 1.5px solid var(--border); border-radius: 10px;
+  font-size: 14px; font-family: 'Lato', sans-serif; transition: var(--trans); outline: none;
+}
+.form-group input:focus { border-color: var(--g-mid); box-shadow: 0 0 0 3px rgba(0,112,74,0.1); }
+.form-group.checkbox { flex-direction: row; align-items: center; gap: 10px; }
+.form-group.checkbox input { width: 16px; height: 16px; margin: 0; }
+.form-group.checkbox label { font-size: 13px; text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--gray); cursor: pointer; }
+.form-divider { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+.form-divider span { font-size: 12px; color: var(--gray); white-space: nowrap; }
+.form-divider::before, .form-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.auth-switch { font-size: 13px; color: var(--gray); text-align: center; margin-top: 16px; }
+.auth-switch a { color: var(--g-mid); font-weight: 700; cursor: pointer; text-decoration: none; }
+.auth-switch a:hover { text-decoration: underline; }
+.btn-social {
+  width: 100%; padding: 11px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: #fff; font-size: 14px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: var(--trans); color: var(--black);
+}
+.btn-social:hover { background: var(--lgray); }
+.forgot-link { font-size: 12px; color: var(--g-mid); font-weight: 700; text-decoration: none; align-self: flex-end; cursor: pointer; }
+.forgot-link:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+footer {
+  background: var(--g-dark); color: rgba(255,255,255,0.75); padding: 64px 48px 32px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 40px; margin-bottom: 48px; padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.footer-brand p { font-size: 13px; line-height: 1.7; opacity: 0.7; margin: 12px 0 20px; max-width: 260px; }
+.footer-socials { display: flex; gap: 10px; }
+.social-link {
+  width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+  cursor: pointer; transition: var(--trans); text-decoration: none;
+}
+.social-link:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+
+.footer-col h4 { color: #fff; font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; transition: var(--trans); }
+.footer-col ul li a:hover { color: #fff; }
+
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 12px; opacity: 0.5; }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { color: rgba(255,255,255,0.45); font-size: 12px; text-decoration: none; transition: var(--trans); }
+.footer-legal a:hover { color: rgba(255,255,255,0.8); }
+
+/* ═══════════════════════════════════════════════
+   TOAST NOTIFICATION
+═══════════════════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--g-dark); color: #fff; padding: 14px 24px;
+  border-radius: 50px; font-size: 14px; font-weight: 700; box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; gap: 10px;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s;
+  z-index: 9999; opacity: 0; pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ═══════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: #fff; border-radius: 24px; padding: 36px;
+  max-width: 480px; width: 100%; box-shadow: var(--shadow-lg);
+  transform: scale(0.95); transition: transform 0.25s;
+}
+.modal-overlay.open .modal { transform: scale(1); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.modal-header h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--g-dark); }
+.modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); line-height: 1; padding: 4px; transition: var(--trans); }
+.modal-close:hover { color: var(--black); }
+.size-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+.size-opt {
+  aspect-ratio: 1; border-radius: 12px; border: 2px solid var(--border);
+  background: #fff; cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px; font-size: 10px; font-weight: 700;
+  color: var(--gray); letter-spacing: 0.5px; transition: var(--trans);
+}
+.size-opt .emoji { font-size: 28px; }
+.size-opt:hover, .size-opt.active { border-color: var(--g-mid); background: var(--g-pale); color: var(--g-dark); }
+.modal-milk { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.milk-opt { padding: 7px 16px; border-radius: 50px; border: 1.5px solid var(--border); background: #fff; font-size: 12px; font-weight: 700; cursor: pointer; transition: var(--trans); color: var(--gray); }
+.milk-opt:hover, .milk-opt.active { border-color: var(--g-mid); color: var(--g-mid); }
+.modal-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+.modal-price { font-size: 24px; font-weight: 900; color: var(--g-mid); }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .navbar { padding: 0 20px; }
+  .nav-links, .nav-actions .btn-outline { display: none; }
+  .hamburger { display: flex; }
+  .hero { padding: 60px 24px; }
+  .hero h1 { font-size: 44px; }
+  .order-layout { grid-template-columns: 1fr; }
+  .cart-sidebar { position: fixed; bottom: 0; left: 0; right: 0; height: auto; max-height: 50vh; z-index: 500; border-top: 1px solid var(--border); border-left: none; }
+  .store-layout { grid-template-columns: 1fr; }
+  .map-area { min-height: 350px; }
+  .auth-left { display: none; }
+  .auth-right { width: 100%; padding: 40px 24px; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .pay-grid { grid-template-columns: 1fr; }
+  footer { padding: 48px 24px 24px; }
+  .promo-banner { padding: 48px 24px; gap: 40px; }
+  .menu-section, .gift-section { padding: 48px 24px; }
+  .store-sidebar { max-height: 50vh; }
+}
+
+@media (max-width: 540px) {
+  .hero h1 { font-size: 34px; }
+  .section-title { font-size: 28px; }
+  .footer-top { grid-template-columns: 1fr; }
+  .auth-right { padding: 32px 20px; }
+  .pay-page { padding: 32px 20px; }
+  .gift-hero { padding: 56px 24px; }
+  .gift-hero h1 { font-size: 36px; }
+  .features-strip .feat-item { min-width: 50%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ ANNOUNCE BAR ═══ -->
+<div class="announce-bar">
+  ☕ Download the Starbucks India app — earn 50 Stars on your first order!
+  <a onclick="showToast('📲 Redirecting to App Store...')">Get the App →</a>
+</div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar">
+  <div class="nav-brand" onclick="showPage('home')">
+    <div class="brand-circle">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="44" stroke="white" stroke-width="4" fill="none"/>
+        <circle cx="50" cy="50" r="32" stroke="white" stroke-width="2" fill="none"/>
+        <text x="50" y="44" text-anchor="middle" font-size="10" fill="white" font-family="serif" font-weight="bold">STARBUCKS</text>
+        <text x="50" y="55" text-anchor="middle" font-size="8"  fill="white" font-family="serif">COFFEE</text>
+        <path d="M28,62 Q50,74 72,62" stroke="white" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Starbucks</div>
+      <div class="brand-sub">India</div>
+    </div>
+  </div>
+
+  <ul class="nav-links">
+    <li><button onclick="showPage('home')"    id="nav-home"  class="active">Menu</button></li>
+    <li><button onclick="showPage('order')"   id="nav-order"        >Order</button></li>
+    <li><button onclick="showPage('gift')"    id="nav-gift"         >Gift</button></li>
+    <li><button onclick="showPage('store')"   id="nav-store"        >Find a Store</button></li>
+    <li><button onclick="showPage('pay')"     id="nav-pay"          >Pay</button></li>
+  </ul>
+
+  <div class="nav-actions">
+    <button class="btn btn-outline" onclick="showPage('login')">Sign In</button>
+    <button class="btn btn-primary" onclick="showPage('signup')">Join Now</button>
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div id="mobile-nav" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;" onclick="toggleMobileMenu()">
+  <div style="position:absolute;right:0;top:0;bottom:0;width:280px;background:#fff;padding:32px 24px;" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
+      <span style="font-weight:700;font-size:16px;color:var(--g-dark);">Menu</span>
+      <button onclick="toggleMobileMenu()" style="background:none;border:none;font-size:24px;cursor:pointer;">✕</button>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:4px;">
+      <button onclick="showPage('home');toggleMobileMenu()"  style="padding:12px 16px;border-radius:10px;border:none;background:none;text-align:left;font-size:15px;font-weight:700;cursor:pointer;color:var(--black);">🏠 Menu</button>
+      <button onclick="showPage('order');toggleMobileMenu()" style="padding:12px 16px;border-radius:10px;border:none;background:none;text-align:left;font-size:15px;font-weight:700;cursor:pointer;color:var(--black);">☕ Order</button>
+      <button onclick="showPage('gift');toggleMobileMenu()"  style="padding:12px 16px;border-radius:10px;border:none;background:none;text-align:left;font-size:15px;font-weight:700;cursor:pointer;color:var(--black);">🎁 Gift</button>
+      <button onclick="showPage('store');toggleMobileMenu()" style="padding:12px 16px;border-radius:10px;border:none;background:none;text-align:left;font-size:15px;font-weight:700;cursor:pointer;color:var(--black);">📍 Find a Store</button>
+      <button onclick="showPage('pay');toggleMobileMenu()"   style="padding:12px 16px;border-radius:10px;border:none;background:none;text-align:left;font-size:15px;font-weight:700;cursor:pointer;color:var(--black);">💳 Pay</button>
+      <hr style="margin:12px 0;border:none;border-top:1px solid var(--border);">
+      <button onclick="showPage('login');toggleMobileMenu()"  style="padding:12px 16px;border-radius:10px;border:none;background:none;text-align:left;font-size:15px;font-weight:700;cursor:pointer;color:var(--g-mid);">Sign In</button>
+      <button onclick="showPage('signup');toggleMobileMenu()" style="padding:12px 16px;border-radius:10px;border:none;background:var(--g-mid);text-align:left;font-size:15px;font-weight:700;cursor:pointer;color:#fff;">Join Now</button>
+    </nav>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-deco hero-deco-1"></div>
+    <div class="hero-deco hero-deco-2"></div>
+    <div class="hero-deco hero-deco-3"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">✦ New Season Specials ✦</div>
+      <h1>Crafted for<br><em>Every Moment</em></h1>
+      <p class="hero-sub">From your morning ritual to evening unwind — explore India's favourite handcrafted beverages, made just the way you like.</p>
+      <div class="hero-btns">
+        <button class="btn btn-white" onclick="showPage('order')">Order Now</button>
+        <button class="btn btn-ghost" onclick="showPage('store')">Find a Store</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature strip -->
+  <div class="features-strip">
+    <div class="feat-item">
+      <div class="feat-icon">📲</div>
+      <div class="feat-title">Order Ahead</div>
+      <div class="feat-desc">Skip the queue with the app</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">⭐</div>
+      <div class="feat-title">Earn Stars</div>
+      <div class="feat-desc">Rewards on every purchase</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">🛵</div>
+      <div class="feat-title">Home Delivery</div>
+      <div class="feat-desc">Via Swiggy &amp; Zomato</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon">🎁</div>
+      <div class="feat-title">Gift Cards</div>
+      <div class="feat-desc">Perfect for every occasion</div>
+    </div>
+  </div>
+
+  <!-- Menu Section -->
+  <section class="menu-section">
+    <div class="menu-header">
+      <p class="section-tag">✦ Explore ✦</p>
+      <h2 class="section-title">Our Menu</h2>
+      <p class="section-sub" style="margin:12px auto 0;text-align:center;">Handcrafted with care. Customised for you. Over 100+ beverages to discover.</p>
+    </div>
+
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="filterMenu('all',this)">All</button>
+      <button class="menu-tab" onclick="filterMenu('hot',this)">Hot Drinks</button>
+      <button class="menu-tab" onclick="filterMenu('cold',this)">Cold Drinks</button>
+      <button class="menu-tab" onclick="filterMenu('frap',this)">Frappuccino®</button>
+      <button class="menu-tab" onclick="filterMenu('food',this)">Food</button>
+      <button class="menu-tab" onclick="filterMenu('tea',this)">Teas</button>
+    </div>
+
+    <div class="menu-grid" id="menu-grid"></div>
+  </section>
+
+  <!-- Promo Banner -->
+  <section class="promo-banner">
+    <div class="promo-text">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border-radius:50px;padding:6px 16px;font-size:11px;font-weight:900;letter-spacing:2px;color:#fff;margin-bottom:20px;">⚡ LIMITED TIME</div>
+      <h2>Monsoon Magic<br>Beverages Are Here</h2>
+      <p>Warm, spiced, and designed to make every rainy afternoon feel like a celebration.</p>
+      <button class="btn btn-white" onclick="showPage('order')">Shop Seasonal →</button>
+    </div>
+    <div class="promo-cups">
+      <div class="cup-card">☕<span>HOT</span></div>
+      <div class="cup-card">🧊<span>ICED</span></div>
+      <div class="cup-card">🧋<span>BLEND</span></div>
+    </div>
+  </section>
+
+  <!-- Rewards Teaser -->
+  <section class="rewards-teaser">
+    <p class="section-tag">✦ Starbucks Rewards™ ✦</p>
+    <h2 class="section-title">The More You Sip,<br>The More You Earn</h2>
+    <p class="section-sub">Join India's favourite coffee loyalty programme. Free drinks await.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">📲</div>
+        <h4>Create Account</h4>
+        <p>Sign up free on the app or website.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">⭐</div>
+        <h4>Earn Stars</h4>
+        <p>1 Star for every ₹50 spent at any store.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon">🎁</div>
+        <h4>Redeem Rewards</h4>
+        <p>Free drinks, food &amp; exclusive perks.</p>
+      </div>
+    </div>
+    <button class="btn btn-gold" onclick="showPage('signup')">Join Rewards — It's Free</button>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: ORDER
+══════════════════════════════════════════════ -->
+<div id="page-order" class="page">
+  <div class="order-layout">
+    <div class="order-main">
+      <h2>Order Your Favourites</h2>
+      <p class="sub">Pick your items, customise, and we'll have it ready.</p>
+      <div class="order-filters" id="order-filters">
+        <button class="filter-btn active" onclick="filterOrder('all',this)">All</button>
+        <button class="filter-btn" onclick="filterOrder('hot',this)">Hot Drinks</button>
+        <button class="filter-btn" onclick="filterOrder('cold',this)">Cold Drinks</button>
+        <button class="filter-btn" onclick="filterOrder('frap',this)">Frappuccino®</button>
+        <button class="filter-btn" onclick="filterOrder('food',this)">Food</button>
+        <button class="filter-btn" onclick="filterOrder('tea',this)">Teas</button>
+      </div>
+      <div class="order-grid" id="order-grid"></div>
+    </div>
+    <div class="cart-sidebar">
+      <div class="cart-header">
+        <h3>Your Order</h3>
+        <span class="cart-count" id="cart-count">0</span>
+      </div>
+      <div class="cart-items" id="cart-items">
+        <div class="cart-empty">
+          <div class="big-emoji">☕</div>
+          <p>Your cup is empty</p>
+          <p style="font-size:12px;opacity:0.7;">Add items to get started</p>
+        </div>
+      </div>
+      <div class="cart-footer" id="cart-footer" style="display:none;">
+        <div class="cart-summary">
+          <div class="cart-row"><span>Subtotal</span><span id="cart-sub">₹0</span></div>
+          <div class="cart-row"><span>Taxes (5%)</span><span id="cart-tax">₹0</span></div>
+          <div class="cart-row total"><span>Total</span><span id="cart-total">₹0</span></div>
+        </div>
+        <button class="btn btn-primary btn-checkout" onclick="checkout()">Place Order →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: GIFT
+══════════════════════════════════════════════ -->
+<div id="page-gift" class="page">
+  <div class="gift-hero">
+    <h1>Give the Gift of<br><em>Starbucks</em></h1>
+    <p>Whether it's a birthday, anniversary, or just because — a Starbucks Gift Card always hits right.</p>
+    <button class="btn btn-gold" onclick="document.getElementById('gift-custom-section').scrollIntoView({behavior:'smooth'})">Send a Gift Card</button>
+  </div>
+
+  <section class="gift-section">
+    <div style="text-align:center;margin-bottom:48px;">
+      <p class="section-tag">✦ Choose a Design ✦</p>
+      <h2 class="section-title">Gift Cards</h2>
+      <p class="section-sub" style="margin:12px auto 0;text-align:center;">Pick a design, personalise your message, and send instantly.</p>
+    </div>
+    <div class="gift-grid">
+      <div class="gift-card" onclick="showToast('💚 Added to your gift selection!')">
+        <div class="gift-card-visual" style="background:linear-gradient(135deg,#1E3932,#00704A);">🌿</div>
+        <div class="gift-card-body">
+          <div class="gift-card-name">Classic Green</div>
+          <div class="gift-card-desc">The iconic Starbucks green. Timeless and always welcome.</div>
+          <div class="gift-card-footer">
+            <div class="gift-from">From <b>₹500</b></div>
+            <button class="btn btn-primary" style="padding:7px 18px;font-size:12px;">Select</button>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card" onclick="showToast('🌸 Added to your gift selection!')">
+        <div class="gift-card-visual" style="background:linear-gradient(135deg,#7C3AED,#DB2777);">🌸</div>
+        <div class="gift-card-body">
+          <div class="gift-card-name">Blossom Pink</div>
+          <div class="gift-card-desc">Vibrant and cheerful — perfect for birthdays and celebrations.</div>
+          <div class="gift-card-footer">
+            <div class="gift-from">From <b>₹500</b></div>
+            <button class="btn btn-primary" style="padding:7px 18px;font-size:12px;">Select</button>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card" onclick="showToast('✨ Added to your gift selection!')">
+        <div class="gift-card-visual" style="background:linear-gradient(135deg,#78350F,#D97706);">✨</div>
+        <div class="gift-card-body">
+          <div class="gift-card-name">Golden Festive</div>
+          <div class="gift-card-desc">Rich golden tones for Diwali, weddings, and festive moments.</div>
+          <div class="gift-card-footer">
+            <div class="gift-from">From <b>₹1000</b></div>
+            <button class="btn btn-primary" style="padding:7px 18px;font-size:12px;">Select</button>
+          </div>
+        </div>
+      </div>
+      <div class="gift-card" onclick="showToast('🎁 Added to your gift selection!')">
+        <div class="gift-card-visual" style="background:linear-gradient(135deg,#1e40af,#0ea5e9);">🎁</div>
+        <div class="gift-card-body">
+          <div class="gift-card-name">Corporate Blue</div>
+          <div class="gift-card-desc">Sleek and professional — ideal for corporate gifting.</div>
+          <div class="gift-card-footer">
+            <div class="gift-from">From <b>₹2000</b></div>
+            <button class="btn btn-primary" style="padding:7px 18px;font-size:12px;">Select</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom Gift Form -->
+  <section id="gift-custom-section" style="padding:0 48px 80px;background:var(--lgray);">
+    <div style="padding-top:64px;max-width:700px;margin:0 auto;">
+      <div class="gift-custom">
+        <h3>Personalise Your Gift</h3>
+        <p>Fill in the details and we'll send it straight to their inbox.</p>
+        <div class="gift-form">
+          <div class="form-row">
+            <div>
+              <label>Recipient Name</label>
+              <input type="text" placeholder="e.g. Priya Sharma">
+            </div>
+            <div>
+              <label>Recipient Email</label>
+              <input type="email" placeholder="priya@email.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label>Card Value</label>
+              <select>
+                <option>₹500</option><option>₹1,000</option>
+                <option>₹2,000</option><option>₹5,000</option>
+              </select>
+            </div>
+            <div>
+              <label>Delivery Date</label>
+              <input type="date">
+            </div>
+          </div>
+          <div>
+            <label>Personal Message</label>
+            <textarea placeholder="Write a heartfelt message..."></textarea>
+          </div>
+          <button class="btn btn-primary" style="width:100%;padding:14px;" onclick="showToast('🎁 Gift card sent successfully!')">Send Gift Card →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: STORE LOCATOR
+══════════════════════════════════════════════ -->
+<div id="page-store" class="page">
+  <div class="store-layout">
+    <div class="store-sidebar">
+      <div class="store-search-box">
+        <h3>Find a Starbucks</h3>
+        <div class="store-search-row">
+          <input class="store-search-input" type="text" id="store-search" placeholder="City, area, or PIN code..." oninput="filterStores(this.value)">
+          <button class="btn-locate" onclick="showToast('📍 Locating nearest store...')">Near Me</button>
+        </div>
+      </div>
+      <div class="store-list" id="store-list"></div>
+    </div>
+    <div class="map-area">
+      <div class="map-placeholder" id="map-area">
+        <div class="map-grid-lines"></div>
+        <svg class="map-roads" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+          <path d="M0,200 Q200,180 400,200 T800,200" stroke="rgba(0,112,74,0.15)" stroke-width="20" fill="none"/>
+          <path d="M0,380 Q300,360 600,380 T800,380" stroke="rgba(0,112,74,0.12)" stroke-width="16" fill="none"/>
+          <path d="M200,0 Q220,200 200,400 T200,600" stroke="rgba(0,112,74,0.12)" stroke-width="16" fill="none"/>
+          <path d="M550,0 Q530,200 560,400 T550,600" stroke="rgba(0,112,74,0.1)" stroke-width="12" fill="none"/>
+          <rect x="260" y="120" width="100" height="60" rx="6" fill="rgba(0,112,74,0.05)"/>
+          <rect x="420" y="250" width="80" height="80" rx="6" fill="rgba(0,112,74,0.05)"/>
+          <rect x="300" y="300" width="120" height="50" rx="6" fill="rgba(0,112,74,0.05)"/>
+          <text x="400" y="520" text-anchor="middle" font-size="14" fill="rgba(0,112,74,0.4)" font-family="serif" font-style="italic">Interactive Map — India</text>
+        </svg>
+        <div id="map-pins"></div>
+        <div class="map-info-card" id="map-info">
+          <h4 id="info-name">—</h4>
+          <p id="info-addr">—</p>
+          <button class="btn btn-primary" style="width:100%;padding:10px;" onclick="showToast('🗺️ Directions opened!')">Get Directions</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: PAY
+══════════════════════════════════════════════ -->
+<div id="page-pay" class="page">
+  <div class="pay-page">
+    <div class="pay-inner">
+      <h2>Starbucks Pay</h2>
+      <p>Your wallet, your rewards — all in one place.</p>
+
+      <div class="pay-grid">
+        <!-- Balance Card -->
+        <div class="pay-balance-card">
+          <h3>Starbucks Card Balance</h3>
+          <div class="pay-balance-amount"><sup>₹</sup>1,240</div>
+          <div class="pay-balance-note">⭐ 340 Stars &nbsp;|&nbsp; Gold Level</div>
+          <div class="pay-card-dots">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="pay-card-number">**** **** **** 4821</div>
+          <div class="pay-card-name">Rohan Mehta</div>
+        </div>
+
+        <!-- Reload -->
+        <div class="pay-card" style="cursor:default;">
+          <div class="pay-card-header">
+            <div class="pay-card-icon" style="background:#ecfdf5;">💳</div>
+            <div>
+              <div class="pay-card-title">Reload Card</div>
+              <div class="pay-card-sub">Add money instantly</div>
+            </div>
+          </div>
+          <p>Top up your Starbucks Card and use it to pay at any store or on the app.</p>
+          <div class="reload-amounts">
+            <div class="reload-amt active" onclick="setReload(this)">₹200</div>
+            <div class="reload-amt" onclick="setReload(this)">₹500</div>
+            <div class="reload-amt" onclick="setReload(this)">₹1,000</div>
+            <div class="reload-amt" onclick="setReload(this)">₹2,000</div>
+          </div>
+          <button class="btn btn-primary" style="width:100%;" onclick="showToast('💳 ₹200 added to your Starbucks Card!')">Add Money</button>
+        </div>
+
+        <!-- Scan to Pay -->
+        <div class="pay-card" onclick="showToast('📲 Opening scanner...')">
+          <div class="pay-card-header">
+            <div class="pay-card-icon" style="background:#fffbeb;">📲</div>
+            <div>
+              <div class="pay-card-title">Scan to Pay</div>
+              <div class="pay-card-sub">At any store</div>
+            </div>
+          </div>
+          <p>Show your barcode at the counter. Fast, contactless, and earns Stars automatically.</p>
+          <div style="width:120px;height:120px;margin:0 auto 20px;background:var(--lgray);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:48px;">
+            📷
+          </div>
+          <button class="btn btn-outline" style="width:100%;">Show Barcode</button>
+        </div>
+
+        <!-- Rewards -->
+        <div class="pay-card" onclick="showPage('signup')">
+          <div class="pay-card-header">
+            <div class="pay-card-icon" style="background:#fef3c7;">⭐</div>
+            <div>
+              <div class="pay-card-title">My Rewards</div>
+              <div class="pay-card-sub">Stars &amp; Benefits</div>
+            </div>
+          </div>
+          <p>Redeem your Stars for free drinks, food, and exclusive Gold-level perks.</p>
+          <div style="background:var(--g-pale);border-radius:12px;padding:16px;margin-bottom:20px;">
+            <div style="font-size:12px;color:var(--gray);margin-bottom:6px;">Progress to next reward</div>
+            <div style="background:var(--border);border-radius:50px;height:8px;overflow:hidden;">
+              <div style="background:var(--g-mid);height:100%;width:68%;border-radius:50px;"></div>
+            </div>
+            <div style="font-size:12px;color:var(--gray);margin-top:6px;">340 / 500 Stars</div>
+          </div>
+          <button class="btn btn-gold" style="width:100%;">Redeem Stars</button>
+        </div>
+      </div>
+
+      <!-- Transaction History -->
+      <div class="reload-form">
+        <h3>Recent Transactions</h3>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gray);">
+              <th style="text-align:left;padding:10px 0;border-bottom:1px solid var(--border);">Date</th>
+              <th style="text-align:left;padding:10px 0;border-bottom:1px solid var(--border);">Store</th>
+              <th style="text-align:right;padding:10px 0;border-bottom:1px solid var(--border);">Amount</th>
+              <th style="text-align:right;padding:10px 0;border-bottom:1px solid var(--border);">Stars</th>
+            </tr>
+          </thead>
+          <tbody id="txn-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: LOGIN
+══════════════════════════════════════════════ -->
+<div id="page-login" class="page">
+  <div class="auth-page">
+    <div class="auth-left">
+      <div class="auth-left-logo">☕</div>
+      <h2>Welcome<br><em>Back</em></h2>
+      <p>Sign in to earn Stars, manage your card, and order ahead.</p>
+      <div class="auth-perks">
+        <div class="auth-perk"><div class="auth-perk-icon">⭐</div> Track your Rewards Stars</div>
+        <div class="auth-perk"><div class="auth-perk-icon">📱</div> Order ahead on the app</div>
+        <div class="auth-perk"><div class="auth-perk-icon">💳</div> Manage your Starbucks Card</div>
+        <div class="auth-perk"><div class="auth-perk-icon">🎁</div> Access exclusive offers</div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <h3>Sign In</h3>
+      <p class="sub">Don't have an account? <a onclick="showPage('signup')">Join now →</a></p>
+      <div class="auth-form">
+        <button class="btn-social" onclick="showToast('🔵 Signing in with Google...')">
+          <span style="font-size:20px;">🇬</span> Continue with Google
+        </button>
+        <button class="btn-social" onclick="showToast('📘 Signing in with Facebook...')">
+          <span style="font-size:20px;">📘</span> Continue with Facebook
+        </button>
+        <div class="form-divider"><span>or sign in with email</span></div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com" id="login-email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="••••••••" id="login-pass">
+        </div>
+        <a class="forgot-link" onclick="showToast('📧 Password reset email sent!')">Forgot password?</a>
+        <div class="form-group checkbox">
+          <input type="checkbox" id="remember">
+          <label for="remember">Keep me signed in</label>
+        </div>
+        <button class="btn btn-primary" style="width:100%;padding:14px;" onclick="handleLogin()">Sign In →</button>
+      </div>
+      <div class="auth-switch">
+        New to Starbucks? <a onclick="showPage('signup')">Create an account</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE: SIGN UP
+══════════════════════════════════════════════ -->
+<div id="page-signup" class="page">
+  <div class="auth-page">
+    <div class="auth-left">
+      <div class="auth-left-logo">🌿</div>
+      <h2>Join the<br><em>Family</em></h2>
+      <p>Create your account and start earning Stars from your very first purchase.</p>
+      <div class="auth-perks">
+        <div class="auth-perk"><div class="auth-perk-icon">🎉</div> 50 bonus Stars on joining</div>
+        <div class="auth-perk"><div class="auth-perk-icon">☕</div> Free birthday drink every year</div>
+        <div class="auth-perk"><div class="auth-perk-icon">⚡</div> Exclusive member-only offers</div>
+        <div class="auth-perk"><div class="auth-perk-icon">🔓</div> Gold tier with premium perks</div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <h3>Create Account</h3>
+      <p class="sub">Already a member? <a onclick="showPage('login')">Sign in →</a></p>
+      <div class="auth-form">
+        <button class="btn-social" onclick="showToast('🔵 Signing up with Google...')">
+          <span style="font-size:20px;">🇬</span> Sign up with Google
+        </button>
+        <div class="form-divider"><span>or create with email</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Priya" id="su-first">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Sharma" id="su-last">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="priya@example.com" id="su-email">
+        </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="tel" placeholder="+91 98765 43210" id="su-phone">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Min. 8 characters" id="su-pass">
+        </div>
+        <div class="form-group checkbox">
+          <input type="checkbox" id="terms" checked>
+          <label for="terms">I agree to the <a href="#" style="color:var(--g-mid)">Terms &amp; Privacy Policy</a></label>
+        </div>
+        <div class="form-group checkbox">
+          <input type="checkbox" id="promo" checked>
+          <label for="promo">Send me exclusive offers &amp; rewards</label>
+        </div>
+        <button class="btn btn-primary" style="width:100%;padding:14px;" onclick="handleSignup()">Create Account →</button>
+      </div>
+      <div class="auth-switch">
+        Already a member? <a onclick="showPage('login')">Sign in</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-col footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="brand-circle" style="width:42px;height:42px;">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:26px;height:26px;fill:white;">
+            <circle cx="50" cy="50" r="44" stroke="white" stroke-width="4" fill="none"/>
+            <text x="50" y="55" text-anchor="middle" font-size="24" fill="white" font-family="serif" font-weight="bold">S</text>
+          </svg>
+        </div>
+        <span style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#fff;">Starbucks India</span>
+      </div>
+      <p>Tata Starbucks Private Limited — bringing the finest handcrafted coffee experience to India since 2012.</p>
+      <div class="footer-socials">
+        <a class="social-link" title="Instagram" onclick="showToast('📷 Opening Instagram...')">📷</a>
+        <a class="social-link" title="Twitter"   onclick="showToast('🐦 Opening Twitter...')">🐦</a>
+        <a class="social-link" title="Facebook"  onclick="showToast('👥 Opening Facebook...')">👥</a>
+        <a class="social-link" title="YouTube"   onclick="showToast('▶️ Opening YouTube...')">▶️</a>
+        <a class="social-link" title="LinkedIn"  onclick="showToast('💼 Opening LinkedIn...')">💼</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>About Us</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Tata Starbucks</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Coffee Sourcing</a></li>
+        <li><a href="#">Newsroom</a></li>
+        <li><a href="#">Investor Relations</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#">Hot Beverages</a></li>
+        <li><a href="#">Cold Drinks</a></li>
+        <li><a href="#">Frappuccino®</a></li>
+        <li><a href="#">Food</a></li>
+        <li><a href="#">Merchandise</a></li>
+        <li><a href="#">At-Home Coffee</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Customer Care</a></li>
+        <li><a href="#">Store Feedback</a></li>
+        <li><a href="#">Corporate Gifting</a></li>
+        <li><a href="#">Media Enquiries</a></li>
+        <li><a href="#">Franchising</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="#">Gift Card Help</a></li>
+        <li><a href="#">App Support</a></li>
+        <li><a href="#" onclick="showPage('store');return false;">Find a Store</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Contact Info Bar -->
+  <div style="display:flex;flex-wrap:wrap;gap:24px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:28px;">
+    <div style="display:flex;align-items:center;gap:10px;font-size:13px;">
+      <span style="font-size:18px;">📞</span>
+      <div>
+        <div style="color:rgba(255,255,255,0.4);font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">Customer Care</div>
+        <div style="color:#fff;font-weight:700;">1800-103-3313</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;font-size:13px;">
+      <span style="font-size:18px;">✉️</span>
+      <div>
+        <div style="color:rgba(255,255,255,0.4);font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">Email Us</div>
+        <div style="color:#fff;font-weight:700;">care@tatastarbucks.com</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;font-size:13px;">
+      <span style="font-size:18px;">📍</span>
+      <div>
+        <div style="color:rgba(255,255,255,0.4);font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">Head Office</div>
+        <div style="color:#fff;font-weight:700;">Mumbai, Maharashtra, India</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;font-size:13px;">
+      <span style="font-size:18px;">🕐</span>
+      <div>
+        <div style="color:rgba(255,255,255,0.4);font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">Support Hours</div>
+        <div style="color:#fff;font-weight:700;">Mon–Sat, 9 AM – 6 PM</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Tata Starbucks Private Limited. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ ITEM MODAL ═══ -->
+<div class="modal-overlay" id="item-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-name">Item Name</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div style="font-size:64px;text-align:center;margin-bottom:16px;" id="modal-emoji">☕</div>
+    <p style="font-size:13px;color:var(--gray);margin-bottom:24px;" id="modal-desc">Description</p>
+
+    <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:12px;">Choose Size</div>
+    <div class="size-options">
+      <div class="size-opt" onclick="selectSize(this,'Tall','0')"><span class="emoji" style="font-size:22px;">🥤</span>TALL</div>
+      <div class="size-opt active" onclick="selectSize(this,'Grande','30')"><span class="emoji" style="font-size:28px;">🥤</span>GRANDE</div>
+      <div class="size-opt" onclick="selectSize(this,'Venti','50')"><span class="emoji" style="font-size:34px;">🥤</span>VENTI</div>
+      <div class="size-opt" onclick="selectSize(this,'Trenta','70')"><span class="emoji" style="font-size:38px;">🥤</span>TRENTA</div>
+    </div>
+
+    <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:10px;">Milk Choice</div>
+    <div class="modal-milk">
+      <div class="milk-opt active" onclick="selectMilk(this)">Whole Milk</div>
+      <div class="milk-opt" onclick="selectMilk(this)">Oat Milk</div>
+      <div class="milk-opt" onclick="selectMilk(this)">Almond</div>
+      <div class="milk-opt" onclick="selectMilk(this)">Soy</div>
+      <div class="milk-opt" onclick="selectMilk(this)">Coconut</div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="modal-price" id="modal-price">₹350</div>
+      <button class="btn btn-primary" onclick="addFromModal()">Add to Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════
+   DATA
+═══════════════════════════════════════ */
+const MENU = [
+  { id:1,  name:'Caramel Macchiato',    emoji:'☕', cat:'hot',  price:410, desc:'Espresso, vanilla syrup, milk & caramel drizzle.', badge:'Bestseller', bg:'#FFF8E7' },
+  { id:2,  name:'Cappuccino',            emoji:'☕', cat:'hot',  price:320, desc:'Equal parts espresso, steamed milk & foam.',       badge:null,          bg:'#F5F0E8' },
+  { id:3,  name:'Flat White',            emoji:'☕', cat:'hot',  price:360, desc:'Ristretto shots with micro-foamed whole milk.',    badge:'Smooth',      bg:'#FFF3E0' },
+  { id:4,  name:'Chai Tea Latte',        emoji:'🍵', cat:'tea',  price:290, desc:'Black tea infused with cinnamon, cloves & spices.',badge:null,          bg:'#FFF3E0' },
+  { id:5,  name:'Matcha Latte',          emoji:'🍵', cat:'tea',  price:340, desc:'Ceremonial matcha with steamed milk.',             badge:'Trending',    bg:'#F0FDF4' },
+  { id:6,  name:'Cold Brew',             emoji:'🥤', cat:'cold', price:380, desc:'Slow-steeped 20 hours. Smooth, rich, refreshing.', badge:'Fan Fav',     bg:'#EFF6FF' },
+  { id:7,  name:'Iced Americano',        emoji:'🥤', cat:'cold', price:310, desc:'Espresso shots over ice, topped with cold water.', badge:null,          bg:'#F0F9FF' },
+  { id:8,  name:'Iced Caramel Latte',    emoji:'🥤', cat:'cold', price:420, desc:'Espresso, milk, caramel sauce & ice.',             badge:null,          bg:'#FFFBEB' },
+  { id:9,  name:'Java Chip Frappuccino', emoji:'🧋', cat:'frap', price:490, desc:'Coffee, mocha & chocolate chips, blended with ice.',badge:'Indulgent',  bg:'#FDF2F8' },
+  { id:10, name:'Caramel Frappuccino',   emoji:'🧋', cat:'frap', price:470, desc:'Coffee, caramel sauce blended with ice & cream.',  badge:null,          bg:'#FFFBEB' },
+  { id:11, name:'Vanilla Frappuccino',   emoji:'🧋', cat:'frap', price:460, desc:'Vanilla bean blended with milk and ice.',          badge:'Classic',     bg:'#F9FAFB' },
+  { id:12, name:'Chocolate Cake',        emoji:'🍰', cat:'food', price:290, desc:'Moist double chocolate layer cake.',               badge:null,          bg:'#FDF2F8' },
+  { id:13, name:'Butter Croissant',      emoji:'🥐', cat:'food', price:220, desc:'Flaky, golden, buttery — fresh baked daily.',      badge:'Fresh',       bg:'#FFFBEB' },
+  { id:14, name:'Chicken Kathi Roll',    emoji:'🌯', cat:'food', price:350, desc:'Indian-inspired grilled chicken in a paratha roll.',badge:'India Special',bg:'#FFF7ED'},
+  { id:15, name:'Tandoori Paneer Roll',  emoji:'🌯', cat:'food', price:330, desc:'Spiced paneer tikka in a whole wheat wrap.',       badge:'Veg',         bg:'#F0FDF4' },
+  { id:16, name:'Lemon Iced Tea',        emoji:'🍋', cat:'tea',  price:260, desc:'Refreshing black tea with lemon and mint.',        badge:null,          bg:'#FEFCE8' },
+];
+
+const STORES = [
+  { id:1, name:'Starbucks Bandra',        addr:'Linking Road, Bandra West, Mumbai',     tags:['Drive-Thru','Wi-Fi','Dine-In'], x:38, y:35, city:'mumbai' },
+  { id:2, name:'Starbucks Powai',         addr:'Hiranandani Gardens, Powai, Mumbai',    tags:['Reserve','Wi-Fi','Outdoor'],    x:62, y:28, city:'mumbai' },
+  { id:3, name:'Starbucks CP',            addr:'Connaught Place, New Delhi',            tags:['Drive-Thru','Reserve'],         x:30, y:60, city:'delhi'  },
+  { id:4, name:'Starbucks Saket',         addr:'Select Citywalk, Saket, Delhi',         tags:['Wi-Fi','Dine-In'],              x:48, y:68, city:'delhi'  },
+  { id:5, name:'Starbucks MG Road',       addr:'MG Road, Bangalore',                    tags:['Reserve','Wi-Fi'],              x:55, y:48, city:'bangalore'},
+  { id:6, name:'Starbucks Koramangala',   addr:'80 Feet Road, Koramangala, Bangalore',  tags:['Dine-In','Outdoor'],            x:70, y:55, city:'bangalore'},
+  { id:7, name:'Starbucks Banjara Hills', addr:'Road No. 1, Banjara Hills, Hyderabad',  tags:['Drive-Thru','Reserve'],         x:40, y:72, city:'hyderabad'},
+  { id:8, name:'Starbucks Anna Nagar',    addr:'2nd Avenue, Anna Nagar, Chennai',       tags:['Wi-Fi','Dine-In'],              x:65, y:80, city:'chennai' },
+];
+
+const TRANSACTIONS = [
+  { date:'15 May 2025', store:'Starbucks Bandra',  amount:'₹490', stars:'+9' },
+  { date:'12 May 2025', store:'Starbucks Powai',   amount:'₹380', stars:'+7' },
+  { date:'08 May 2025', store:'Starbucks CP Delhi',amount:'₹610', stars:'+12' },
+  { date:'02 May 2025', store:'Starbucks Koramangala',amount:'₹290',stars:'+5' },
+  { date:'28 Apr 2025', store:'Starbucks MG Road', amount:'₹740', stars:'+14' },
+];
+
+/* ═══════════════════════════════════════
+   CART STATE
+═══════════════════════════════════════ */
+let cart = [];
+let currentItem = null;
+let selectedSize = { label:'Grande', extra:30 };
+let selectedMilk = 'Whole Milk';
+
+/* ═══════════════════════════════════════
+   PAGE NAVIGATION
+═══════════════════════════════════════ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+
+  document.querySelectorAll('.nav-links button, .nav-links a').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('nav-' + id);
+  if (btn) btn.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════════════
+   MENU RENDER
+═══════════════════════════════════════ */
+function renderMenu(items, containerId, type) {
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = '';
+  items.forEach(item => {
+    const el = document.createElement('div');
+    el.className = type === 'home' ? 'menu-card' : 'order-item';
+    if (type === 'home') {
+      el.innerHTML = `
+        <div class="menu-card-img" style="background:${item.bg};">
+          ${item.badge ? `<div class="menu-card-badge">${item.badge}</div>` : ''}
+          <span>${item.emoji}</span>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">${item.name}</div>
+          <div class="menu-card-desc">${item.desc}</div>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">₹${item.price}</span>
+            <button class="btn-add" onclick="openModal(${item.id}, event)" aria-label="Add ${item.name}">+</button>
+          </div>
+        </div>`;
+    } else {
+      el.innerHTML = `
+        <div class="order-item-img" style="background:${item.bg};">${item.emoji}</div>
+        <div class="order-item-body">
+          <div class="order-item-name">${item.name}</div>
+          <div class="order-item-price">₹${item.price}</div>
+          <button class="btn-order-add" onclick="openModal(${item.id}, event)">+ Add to Order</button>
+        </div>`;
+    }
+    grid.appendChild(el);
+  });
+}
+
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = cat === 'all' ? MENU : MENU.filter(i => i.cat === cat);
+  renderMenu(filtered, 'menu-grid', 'home');
+}
+
+function filterOrder(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = cat === 'all' ? MENU : MENU.filter(i => i.cat === cat);
+  renderMenu(filtered, 'order-grid', 'order');
+}
+
+/* ═══════════════════════════════════════
+   MODAL
+═══════════════════════════════════════ */
+function openModal(id, e) {
+  if (e) e.stopPropagation();
+  currentItem = MENU.find(i => i.id === id);
+  if (!currentItem) return;
+  document.getElementById('modal-name').textContent  = currentItem.name;
+  document.getElementById('modal-emoji').textContent = currentItem.emoji;
+  document.getElementById('modal-desc').textContent  = currentItem.desc;
+  selectedSize = { label:'Grande', extra:30 };
+  selectedMilk = 'Whole Milk';
+  document.querySelectorAll('.size-opt').forEach((o,i) => o.classList.toggle('active', i===1));
+  document.querySelectorAll('.milk-opt').forEach((o,i) => o.classList.toggle('active', i===0));
+  updateModalPrice();
+  document.getElementById('item-modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('item-modal')) return;
+  document.getElementById('item-modal').classList.remove('open');
+}
+
+function selectSize(el, label, extra) {
+  document.querySelectorAll('.size-opt').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  selectedSize = { label, extra: parseInt(extra) };
+  updateModalPrice();
+}
+
+function selectMilk(el) {
+  document.querySelectorAll('.milk-opt').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  selectedMilk = el.textContent;
+}
+
+function updateModalPrice() {
+  if (!currentItem) return;
+  document.getElementById('modal-price').textContent = '₹' + (currentItem.price + selectedSize.extra);
+}
+
+function addFromModal() {
+  if (!currentItem) return;
+  addToCart(currentItem, selectedSize, selectedMilk);
+  document.getElementById('item-modal').classList.remove('open');
+}
+
+/* ═══════════════════════════════════════
+   CART
+═══════════════════════════════════════ */
+function addToCart(item, size, milk) {
+  const key = `${item.id}-${size.label}-${milk}`;
+  const existing = cart.find(c => c.key === key);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ key, id:item.id, name:item.name, emoji:item.emoji, price: item.price + size.extra, size:size.label, milk, qty:1 });
+  }
+  renderCart();
+  showToast(`✅ ${item.name} (${size.label}) added!`);
+}
+
+function renderCart() {
+  const container = document.getElementById('cart-items');
+  const footer    = document.getElementById('cart-footer');
+  const countEl   = document.getElementById('cart-count');
+
+  const totalItems = cart.reduce((s, c) => s + c.qty, 0);
+  countEl.textContent = totalItems;
+
+  if (cart.length === 0) {
+    container.innerHTML = `<div class="cart-empty"><div class="big-emoji">☕</div><p>Your cup is empty</p><p style="font-size:12px;opacity:0.7;">Add items to get started</p></div>`;
+    footer.style.display = 'none';
+    return;
+  }
+
+  footer.style.display = 'block';
+  container.innerHTML = cart.map(c => `
+    <div class="cart-item">
+      <div class="cart-item-emoji">${c.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${c.name}</div>
+        <div class="cart-item-price">${c.size} · ${c.milk}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty('${c.key}',-1)">−</button>
+          <span class="qty-val">${c.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${c.key}',1)">+</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+        <button class="cart-remove" onclick="removeFromCart('${c.key}')">🗑</button>
+        <span class="cart-item-total">₹${c.price * c.qty}</span>
+      </div>
+    </div>`).join('');
+
+  const sub   = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const tax   = Math.round(sub * 0.05);
+  const total = sub + tax;
+  document.getElementById('cart-sub').textContent   = '₹' + sub;
+  document.getElementById('cart-tax').textContent   = '₹' + tax;
+  document.getElementById('cart-total').textContent = '₹' + total;
+}
+
+function changeQty(key, delta) {
+  const item = cart.find(c => c.key === key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(c => c.key !== key);
+  renderCart();
+}
+
+function removeFromCart(key) {
+  cart = cart.filter(c => c.key !== key);
+  renderCart();
+  showToast('🗑 Item removed');
+}
+
+function checkout() {
+  if (cart.length === 0) return;
+  cart = [];
+  renderCart();
+  showToast('🎉 Order placed! Ready in ~5 mins.');
+}
+
+/* ═══════════════════════════════════════
+   STORES
+═══════════════════════════════════════ */
+function renderStores(list) {
+  const storeList = document.getElementById('store-list');
+  storeList.innerHTML = list.map(s => `
+    <div class="store-item" id="si-${s.id}" onclick="selectStore(${s.id})">
+      <div class="store-item-header">
+        <span class="store-item-name">${s.name}</span>
+        <span class="store-open">Open</span>
+      </div>
+      <div class="store-addr">📍 ${s.addr}</div>
+      <div class="store-tags">${s.tags.map(t=>`<span class="store-tag">${t}</span>`).join('')}</div>
+    </div>`).join('');
+
+  const pinsEl = document.getElementById('map-pins');
+  pinsEl.innerHTML = list.map(s => `
+    <div class="map-pin" style="left:${s.x}%;top:${s.y}%;" onclick="selectStore(${s.id})" title="${s.name}">
+      <div class="map-pin-dot"><span>☕</span></div>
+      <div class="map-pin-label">${s.name.replace('Starbucks ','')}</div>
+    </div>`).join('');
+}
+
+function selectStore(id) {
+  const s = STORES.find(x => x.id === id);
+  document.querySelectorAll('.store-item').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById('si-' + id);
+  if (el) { el.classList.add('active'); el.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+  document.getElementById('info-name').textContent = s.name;
+  document.getElementById('info-addr').textContent = s.addr;
+  document.getElementById('map-info').classList.add('visible');
+}
+
+function filterStores(q) {
+  const ql = q.toLowerCase();
+  const filtered = ql ? STORES.filter(s => s.name.toLowerCase().includes(ql) || s.addr.toLowerCase().includes(ql) || s.city.includes(ql)) : STORES;
+  renderStores(filtered);
+}
+
+/* ═══════════════════════════════════════
+   TRANSACTIONS
+═══════════════════════════════════════ */
+function renderTransactions() {
+  document.getElementById('txn-tbody').innerHTML = TRANSACTIONS.map(t => `
+    <tr style="border-bottom:1px solid var(--border);">
+      <td style="padding:12px 0;font-size:13px;color:var(--gray);">${t.date}</td>
+      <td style="padding:12px 0;font-size:13px;">${t.store}</td>
+      <td style="padding:12px 0;font-size:13px;text-align:right;font-weight:700;">${t.amount}</td>
+      <td style="padding:12px 0;font-size:13px;text-align:right;color:var(--g-mid);font-weight:700;">${t.stars}</td>
+    </tr>`).join('');
+}
+
+/* ═══════════════════════════════════════
+   RELOAD SELECTOR
+═══════════════════════════════════════ */
+function setReload(el) {
+  document.querySelectorAll('.reload-amt').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ═══════════════════════════════════════
+   AUTH HANDLERS
+═══════════════════════════════════════ */
+function handleLogin() {
+  const email = document.getElementById('login-email').value;
+  const pass  = document.getElementById('login-pass').value;
+  if (!email || !pass) { showToast('⚠️ Please fill in all fields'); return; }
+  showToast('👋 Welcome back! Signing you in...');
+  setTimeout(() => showPage('home'), 1200);
+}
+
+function handleSignup() {
+  const first = document.getElementById('su-first').value;
+  const email = document.getElementById('su-email').value;
+  const pass  = document.getElementById('su-pass').value;
+  if (!first || !email || !pass) { showToast('⚠️ Please fill in all fields'); return; }
+  showToast('🎉 Account created! Welcome to Starbucks Rewards!');
+  setTimeout(() => showPage('home'), 1400);
+}
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+let toastTimeout;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ═══════════════════════════════════════
+   MOBILE MENU
+═══════════════════════════════════════ */
+function toggleMobileMenu() {
+  const mn = document.getElementById('mobile-nav');
+  mn.style.display = mn.style.display === 'none' ? 'flex' : 'none';
+}
+
+/* ═══════════════════════════════════════
+   INIT
+═══════════════════════════════════════ */
+renderMenu(MENU, 'menu-grid', 'home');
+renderMenu(MENU, 'order-grid', 'order');
+renderStores(STORES);
+renderTransactions();
+</script>
+</body>
+</html>
